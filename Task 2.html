@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intermediate HTML, CSS, and JS Project</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Layout using Flexbox and CSS Grid */
+    header {
+      background-color: #4CAF50;
+      padding: 1rem;
+      color: white;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-around;
+      background: #333;
+      padding: 1rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    form, .todo {
+      background: #f9f9f9;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    label, input, button {
+      display: block;
+      margin-bottom: 0.5rem;
+      width: 100%;
+    }
+
+    .todo-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Intermediate HTML, CSS, and JavaScript</h1>
+  </header>
+  <nav>
+    <a href="#form">Contact Form</a>
+    <a href="#todo">To-Do List</a>
+  </nav>
+  <main>
+    <!-- Contact Form with Validation -->
+    <section id="form">
+      <h2>Contact Form</h2>
+      <form id="contactForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <button type="submit">Submit</button>
+      </form>
+      <p id="formMessage"></p>
+    </section>
+
+    <!-- To-Do List -->
+    <section class="todo" id="todo">
+      <h2>Dynamic To-Do List</h2>
+      <input type="text" id="taskInput" placeholder="Enter a new task">
+      <button onclick="addTask()">Add Task</button>
+      <ul id="taskList" class="todo-list"></ul>
+    </section>
+  </main>
+
+  <script>
+    // Form Validation
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('formMessage');
+
+      if (name === '' || email === '') {
+        message.textContent = 'Please fill out all fields.';
+        message.style.color = 'red';
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        message.textContent = 'Please enter a valid email address.';
+        message.style.color = 'red';
+        return;
+      }
+
+      message.textContent = 'Form submitted successfully!';
+      message.style.color = 'green';
+      this.reset();
+    });
+
+    // To-Do List
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      const taskText = input.value.trim();
+      if (taskText === '') return;
+
+      const li = document.createElement('li');
+      li.textContent = taskText;
+      li.onclick = () => li.remove();
+      document.getElementById('taskList').appendChild(li);
+      input.value = '';
+    }
+  </script>
+</body>
+</html>
